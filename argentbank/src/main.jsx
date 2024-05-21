@@ -8,7 +8,7 @@ import Signup from './pages/signup/Signup'
 import User from './pages/user/User'
 import ErrorPage from './pages/errorPage/ErrorPage'
 import Footer from './layout/footer/Footer'
-import './index.scss'
+import './_index.scss'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
