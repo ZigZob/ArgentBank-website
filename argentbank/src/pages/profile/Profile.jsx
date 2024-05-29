@@ -3,15 +3,15 @@ import './_index.scss'
 import Account from '../../components/account/Account'
 import { useSelector } from 'react-redux'
 import { selectUserData } from '../../selectors'
-
+import Form from '../../components/form/Form'
 export default function Profile() {
     const user = useSelector(selectUserData)
-
     return (
         <main className="main bg-dark">
             <div className="header">
                 <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
                 <button className="edit-button">Edit Name</button>
+                <Form />
             </div>
             <h2 className="sr-only">Accounts</h2>
             <Account title="Argent Bank Checking (x8349)" amount="2,082.79" amountDesc="Available Balance" />

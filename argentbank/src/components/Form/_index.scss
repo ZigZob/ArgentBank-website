@@ -1,0 +1,38 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    & label {
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+    }
+
+    & input {
+        padding: 5px;
+        font-size: 1.2rem;
+        max-width: 200px;
+    }
+}
+
+.buttonWrapper {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+
+    .save-button,
+    .cancel-button {
+        display: block;
+        min-width: 160px;
+        padding: 8px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        border-color: #00bc77;
+        background-color: #00bc77;
+        color: #fff;
+    }
+}
