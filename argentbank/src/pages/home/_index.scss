@@ -8,7 +8,7 @@
 }
 
 .hero {
-    background-image: url(../../../public/bank-tree.webp);
+    background-image: url(./bank-tree.webp);
     background-position: 0 -50px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -16,6 +16,7 @@
     position: relative;
 
     @media (min-width: 920px) {
+        background-image: url(./bank-tree.webp); // equivalent du srcset, mettre une autre image
         height: 400px;
         background-position: 0% 33%;
     }

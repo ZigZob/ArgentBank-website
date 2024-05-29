@@ -1,26 +1,35 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-//import './base/_reset.scss'
 import Header from './layout/header/Header'
 import Home from './pages/home/Home'
-import Signup from './pages/signup/Signup'
-import User from './pages/user/User'
+import Login from './pages/login/Login'
+import Profile from './pages/profile/Profile'
 import ErrorPage from './pages/errorPage/ErrorPage'
 import Footer from './layout/footer/Footer'
 import './_index.scss'
+import rootReducer from './reducers'
+import { Provider } from "react-redux"
+import { configureStore } from '@reduxjs/toolkit'
+
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: true,
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/user" element={<User />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </Provider>
   </React.StrictMode>,
 )
