@@ -1,12 +1,3 @@
-.features {
-    display: flex;
-    flex-direction: column;
-
-    @media (min-width: 920px) {
-        flex-direction: row;
-    }
-}
-
 .hero {
     background-image: url(./bank-tree.webp);
     background-position: 0 -50px;

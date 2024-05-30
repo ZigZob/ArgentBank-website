@@ -3,12 +3,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 export const UPDATE_USERNAME = "UPDATE_USERNAME"
 
 export const updateUserName = createAsyncThunk(
-    'user/profile',
+    'user/updateUsername',
     async ({ userName }) => {
         const response = await fetch("http://localhost:3001/api/v1/user/profile", {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${state.token}`
             },
             body: JSON.stringify({ userName })
         });

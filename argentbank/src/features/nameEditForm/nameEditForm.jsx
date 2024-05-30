@@ -1,4 +1,4 @@
-import './_index.scss'
+// import './_index.scss'
 
 // a ce stade la je suis connecté, donc je dois avoir mon state user qui doit etre peuplé
 

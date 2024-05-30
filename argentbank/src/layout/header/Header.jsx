@@ -10,7 +10,6 @@ export default function Header() {
     return (
         <nav className="main-nav">
             <Link className="main-nav__logo" to="/">
-                {/* que se passe t il si on click ici en étant logged in */}
                 <img
                     className="main-nav__logoImg"
                     src="./argentBankLogo.webp"
