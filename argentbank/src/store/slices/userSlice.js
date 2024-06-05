@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
-    token: {},
-    userName: {},
-    firstName: {},
-    lastName: {},
+    token: "",
+    userName: "",
+    firstName: "",
+    lastName: "",
 };
 
 
@@ -45,9 +45,6 @@ const userSlice = createSlice({
             state.lastName = action.payload.lastName;
         },
         resetUserData: () => initialState,
-        // updateUserName: (state, action) => {
-        //     state.userName = action.payload.userName;
-        // },
     },
     extraReducers: (builder) => {
         builder
