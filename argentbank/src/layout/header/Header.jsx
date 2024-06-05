@@ -12,7 +12,8 @@ export default function Header() {
             <Link className="main-nav__logo" to="/">
                 <img
                     className="main-nav__logoImg"
-                    src="./argentBankLogo.webp"
+                    src="./argentBankLogo.png"
+                    srcSet="./argentBankLogo.webp"
                     alt="Argent Bank Logo"
                 />
                 <h1 className="sr-only">Argent Bank</h1>

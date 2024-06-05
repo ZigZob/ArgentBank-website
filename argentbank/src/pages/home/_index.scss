@@ -1,16 +1,25 @@
 .hero {
-    background-image: url(./bank-tree.webp);
+    background-image: url(./bank-tree-m.jpg);
     background-position: 0 -50px;
     background-size: cover;
     background-repeat: no-repeat;
     height: 300px;
     position: relative;
 
+    @supports (background-image: url(./bank-tree-m.webp)) {
+        background-image: url(./bank-tree-m.webp)
+    }
+
     @media (min-width: 920px) {
-        background-image: url(./bank-tree.webp); // equivalent du srcset, mettre une autre image
+        background-image: url(./bank-tree-l.jpg);
         height: 400px;
         background-position: 0% 33%;
+
+        @supports (background-image: url(./bank-tree-l.webp)) {
+            background-image: url(./bank-tree-l.webp)
+        }
     }
+
 }
 
 .heroContent {
