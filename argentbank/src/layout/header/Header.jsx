@@ -2,7 +2,7 @@ import React from 'react'
 import './_index.scss'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserName } from '../../selectors'
+import { selectUserName } from '../../store/selectors'
 import { resetUserData } from '../../store/slices/userSlice'
 export default function Header() {
     const userName = useSelector(selectUserName)

@@ -27,7 +27,6 @@ export const updateUserName = createAsyncThunk(
             throw new Error("Failed to update username");
         }
         const data = await response.json();
-        console.log(data.body.userName);
         return { userName: data.body.userName };
     }
 );

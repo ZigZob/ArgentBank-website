@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './_index.scss'
 import Accounts from '../../containers/accounts/Accounts'
 import { useSelector } from 'react-redux'
-import { selectUserData } from '../../selectors'
+import { selectUserData } from '../../store/selectors'
 import Form from '../../components/updateForm/Form'
 import { useNavigate } from 'react-router-dom'
 

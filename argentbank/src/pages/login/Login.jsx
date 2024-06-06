@@ -26,10 +26,10 @@ export default function Login() {
         }
         const data = await responseToAuth.json();
         const token = await data.body.token;
+        console.log(data);
         dispatch(storeToken({
             token: token
-        }))
-        console.log(token);
+        }));
         const responseToGetUserData = await fetch("http://localhost:3001/api/v1/user/profile", {
             method: 'POST',
             headers: {
@@ -42,7 +42,6 @@ export default function Login() {
             throw new Error("Failed to fetch user data");
         }
         const userData = await responseToGetUserData.json();
-        console.log(userData.body)
         dispatch(setUserData({
             userName: userData.body.userName,
             lastName: userData.body.lastName,
@@ -59,11 +58,11 @@ export default function Login() {
                 <form onSubmit={handleSubmit} >
                     <div className="input-wrapper">
                         <label htmlFor="email">Email</label>
-                        <input onChange={(e) => { setEmail(e.target.value.trim()); console.log(e.target.value); }} type="text" id="email" />
+                        <input onChange={(e) => setEmail(e.target.value.trim())} type="text" id="email" />
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="password">Password</label>
-                        <input onChange={(e) => { setPassword(e.target.value.trim()); console.log(e.target.value); }} type="password" id="password" />
+                        <input onChange={(e) => setPassword(e.target.value.trim())} type="password" id="password" />
                     </div>
                     <div className="input-remember">
                         <input type="checkbox" id="remember-me" />

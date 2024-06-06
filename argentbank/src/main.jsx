@@ -8,14 +8,8 @@ import Profile from './pages/profile/Profile'
 import ErrorPage from './pages/errorPage/ErrorPage'
 import Footer from './layout/footer/Footer'
 import './_index.scss'
-import rootReducer from './reducers'
 import { Provider } from "react-redux"
-import { configureStore } from '@reduxjs/toolkit'
-
-const store = configureStore({
-  reducer: rootReducer,
-  devTools: true,
-})
+import { store } from './store'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
