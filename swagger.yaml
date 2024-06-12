@@ -101,15 +101,14 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  //endpoint to fetch all accounts of the authenticated user
   /user/accounts:
     post:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: fetch all accounts of the authenticated user
-      description: Endpoint to fetch all accounts of the authenticated user
+      summary: User Account API
+      description: API for fetching all user accounts
       produces:
         - application/json
       responses:
@@ -121,16 +120,20 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  //endpoint to fetch all transactions of a specific account of the authenticated user
-  /user/accounts/${accountId}/transactions: // ou /user/accounts/transactions ?
+  /user/accounts/{accountId}/transactions:
     post:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: fetch all transactions of a specific account of the authenticated user
-      description: Endpoint to fetch all transactions of a specific account of the authenticated user
+        - User Transactions Module
+      summary: User Account Transactions API
+      description: API for fetching all of an account's transactions
       parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: string
         - in: body
           name: body
           description: AccountId Payload
@@ -151,49 +154,98 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  //endpoint to update at least one of transaction.note and/or transaction.category of a specific transaction in a specific account of the authenticated user
-  /user/accounts/${accountId}/transactions/${transactionId}: //ou /user/accounts/transactions ?
-  put:
-    security:
-      - Bearer: []
-    tags:
-      - User Module
-    summary: fetch all transactions of a specific account of the authenticated user
-    description: Endpoint to fetch all transactions of a specific account of the authenticated user
-    parameters:
-      - in: body
-        name: body
-        description: AccountId Payload
-        schema:
-          type: object
-          properties:
-            accountId:
-              type: string
-              description: ID of the account.
-            transactionId:
-              type: string
-              description: ID of the transaction
-            transactionCategory:
-              type: string
-              description: Category of the transaction
-            transactionNote:
-              type: string
-              description: Note of the transaction
-  //Additional logic is required in the backend to force either note or category to be in the body
-          required: 
-            - accountId
-            - transactionId
-    produces:
-      - application/json
-    responses:
-      '200':
-        description: account transactions retrieved successully
-        schema:
-          $ref: '#/definitions/ApiResponse'
-      '400':
-        description: Invalid Fields
-      '500':
-        description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionId}/note:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Transactions Module
+      summary: User Account Transaction API
+      description: API for updating a transaction note
+      parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: transactionNote Payload
+          required: true
+          schema:
+            type: object
+            properties:
+              accountId:
+                type: string
+                description: ID of the account.
+              transactionId:
+                type: string
+                description: ID of the transaction
+              transactionNote:
+                type: string
+                description: Note of the transaction
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: transaction note updated successully
+          schema:
+           $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionId}/category:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Transactions Module
+      summary: User Account Transaction API
+      description: API for updating a transaction category
+      parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: transactionCategory Payload
+          required: true
+          schema:
+            type: object
+            properties:
+              accountId:
+                type: string
+                description: ID of the account.
+              transactionId:
+                type: string
+                description: ID of the transaction
+              transactionCategory:
+                type: string
+                description: Category of the transaction
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: transaction category updated successully
+          schema:
+           $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -253,8 +305,36 @@ definitions:
     type: object
     properties:
       type:
-        type: string //Checking / Savings / Credit Card
+        type: string
+        description: account type
       id:
-        type: string //x8349 / x6712 / x8349
+        type: string
+        description: account ID
       balance:
-        type: string // $2,082.79 / $10,928.42 / $184.30
+        type: string
+        description: account balance amount
+  accountTransaction: 
+    type: object
+    properties:
+      id:
+        type: string
+        description: transaction ID
+      date: 
+        type: string
+        description: transaction date
+      origin:
+        type: string
+        description: transaction origin
+      amount:
+        type: string
+        description: transaction amount
+      type:
+        type: string
+        description: transaction type
+      category:
+        type: string
+        description: transaction category
+      note:
+        type: string
+        description: transaction note
+  

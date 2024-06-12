@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './_index.scss'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { storeToken, setUserData } from '../../store/slices/userSlice';
+import { loginUser } from '../../store/slices/userSlice';
 
 export default function Login() {
     const dispatch = useDispatch()
@@ -12,43 +12,13 @@ export default function Login() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
-        const responseToAuth = await fetch("http://localhost:3001/api/v1/user/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-        if (!responseToAuth.ok) {
-            alert("Email/Password incorrect")
-            throw new Error('Failed to fetch user');
+        const resultAction = await dispatch(loginUser({ email, password }));
+        if (loginUser.fulfilled.match(resultAction)) {
+            navigate("/profile");
+        } else {
+            alert(resultAction.payload || 'Failed to login');
         }
-        const data = await responseToAuth.json();
-        const token = await data.body.token;
-        console.log(data);
-        dispatch(storeToken({
-            token: token
-        }));
-        const responseToGetUserData = await fetch("http://localhost:3001/api/v1/user/profile", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            },
-        });
-        if (!responseToGetUserData.ok) {
-            alert("An error occurred fetching your data")
-            throw new Error("Failed to fetch user data");
-        }
-        const userData = await responseToGetUserData.json();
-        dispatch(setUserData({
-            userName: userData.body.userName,
-            lastName: userData.body.lastName,
-            firstName: userData.body.firstName,
-        }))
-        navigate("/profile");
-    };
+    }
 
     return (
         <main className="main bg-dark" >

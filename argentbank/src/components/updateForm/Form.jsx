@@ -4,20 +4,25 @@ import { selectUserData } from "../../store/selectors"
 import { useState } from "react"
 import { updateUserName } from "../../store/slices/userSlice"
 
-export default function Form({ isHeaderHidden, toggle }) {
+export default function Form({ toggle }) {
     const dispatch = useDispatch()
     const user = useSelector(selectUserData)
     const [newUserName, setNewUserName] = useState(user.userName);
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault()
-        dispatch(updateUserName({ userName: newUserName }));
-        //toggle switches between the default display and the form display
-        toggle();
+        const resultAction = await dispatch(updateUserName({ userName: newUserName }));
+        if (updateUserName.fulfilled.match(resultAction)) {
+            //toggle switches between the default display and the form display
+            toggle();
+        }
+        else {
+            alert(resultAction.payload || 'Failed to update username');
+        }
     }
 
     return (
-        <form className={isHeaderHidden === false ? "hidden" : ""} onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className="inputWrapper">
                 <label htmlFor="username">User name : </label>
                 <input onChange={(e) => setNewUserName(e.target.value.trim())} type="text" id="username" name="username" placeholder={user.userName} />
@@ -32,7 +37,7 @@ export default function Form({ isHeaderHidden, toggle }) {
             </div>
             <div className="buttonWrapper">
                 <button className="save-button" type="submit" >Save</button>
-                <button className="cancel-button" type="button" onClick={() => { toggle(); setNewUserName(user.userName) }}>Cancel</button>
+                <button className="cancel-button" type="button" onClick={() => toggle()}>Cancel</button>
             </div>
         </form>
     )

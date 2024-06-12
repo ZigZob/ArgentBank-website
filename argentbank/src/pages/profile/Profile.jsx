@@ -24,8 +24,10 @@ export default function Profile() {
                     <>Welcome back <br /> {user.firstName} {user.lastName}!</>
                 ) : ("Edit user info")}
                 </h1>
-                <button onClick={() => setToggle(true)} className={toggle === true ? "hidden edit-button" : "edit-button"}>Edit Name</button>
-                <Form isHeaderHidden={toggle} toggle={() => setToggle(false)} />
+                {toggle === false ? (
+                    <button onClick={() => setToggle(true)} className={"edit-button"}>Edit Name</button>)
+                    : <Form toggle={() => setToggle(false)} />}
+
             </div>
             <Accounts />
         </main>
