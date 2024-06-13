@@ -64,8 +64,7 @@ export const updateUserName = createAsyncThunk(
                 body: JSON.stringify({ userName })
             });
             if (!response.ok) {
-                const errorData = await response.json();
-                return rejectWithValue(errorData);
+                return rejectWithValue('Failed to update username');
             }
             const data = await response.json();
             return { userName: data.body.userName };

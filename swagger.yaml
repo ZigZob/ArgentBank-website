@@ -113,9 +113,11 @@ paths:
         - application/json
       responses:
         '200':
-          description: User accounts retrieved successully
+          description: User accounts retrieved successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            type: array
+            items:
+              $ref: '#/definitions/userAccount'
         '400':
           description: Invalid Fields
         '500':
@@ -147,9 +149,11 @@ paths:
         - application/json
       responses:
         '200':
-          description: account transactions retrieved successully
+          description: account transactions retrieved successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            type: array
+            items:
+              $ref: '#/definitions/accountTransaction'
         '400':
           description: Invalid Fields
         '500':
@@ -160,8 +164,8 @@ paths:
         - Bearer: []
       tags:
         - User Transactions Module
-      summary: User Account Transaction API
-      description: API for updating a transaction note
+      summary: Update Transaction Note
+      description: API for updating the note of a transaction
       parameters:
         - in: path
           name: accountId
@@ -175,27 +179,48 @@ paths:
           type: string
         - in: body
           name: body
-          description: transactionNote Payload
+          description: Payload containing the transaction note to update
           required: true
           schema:
             type: object
             properties:
-              accountId:
+              note:
                 type: string
-                description: ID of the account.
-              transactionId:
-                type: string
-                description: ID of the transaction
-              transactionNote:
-                type: string
-                description: Note of the transaction
+                description: New note value. Set to null to delete.
+                default: null
       produces:
         - application/json
       responses:
         '200':
-          description: transaction note updated successully
+          description: Transaction note updated successfully
           schema:
-           $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/TransactionUpdate'
+          examples:
+            application/json:
+              status: 200
+              message: Transaction note updated successfully
+              details:
+                action: updated
+        '201':
+          description: Transaction note created successfully
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+          examples:
+            application/json:
+              status: 201
+              message: Transaction note created successfully
+              details:
+                action: created
+        '204':
+          description: Transaction note deleted successfully
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+          examples:
+            application/json:
+              status: 204
+              message: Transaction note deleted successfully
+              details:
+                action: deleted
         '400':
           description: Invalid Fields
         '500':
@@ -206,8 +231,8 @@ paths:
         - Bearer: []
       tags:
         - User Transactions Module
-      summary: User Account Transaction API
-      description: API for updating a transaction category
+      summary: Update Transaction Category
+      description: API for updating the category of a specific transaction
       parameters:
         - in: path
           name: accountId
@@ -221,27 +246,48 @@ paths:
           type: string
         - in: body
           name: body
-          description: transactionCategory Payload
+          description: Payload containing the transaction category to update
           required: true
           schema:
             type: object
             properties:
-              accountId:
-                type: string
-                description: ID of the account.
-              transactionId:
-                type: string
-                description: ID of the transaction
               transactionCategory:
                 type: string
-                description: Category of the transaction
+                description: New category value. Set to null to delete.
+                default: null
       produces:
         - application/json
       responses:
         '200':
-          description: transaction category updated successully
+          description: Transaction category updated successfully
           schema:
-           $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/TransactionUpdate'
+          examples:
+            application/json:
+              status: 200
+              message: Transaction category updated successfully
+              details:
+                action: updated
+        '201':
+          description: Transaction category created successfully
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+          examples:
+            application/json:
+              status: 201
+              message: Transaction category created successfully
+              details:
+                action: created
+        '204':
+          description: Transaction category deleted successfully
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+          examples:
+            application/json:
+              status: 204
+              message: Transaction category deleted successfully
+              details:
+                action: deleted
         '400':
           description: Invalid Fields
         '500':
@@ -331,10 +377,28 @@ definitions:
       type:
         type: string
         description: transaction type
+      newBalance:
+        type: string
+        description: Previous balance minus transaction amount
       category:
         type: string
-        description: transaction category
+        description: transaction category (optional)
       note:
         type: string
-        description: transaction note
-  
+        description: transaction note (optional)
+  TransactionUpdate:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: HTTP status code
+      message:
+        type: string
+        description: Response message
+      details:
+        type: object
+        properties:
+          action:
+            type: string
+            enum: [updated, created, deleted]
+            description: Action performed on the transaction
